@@ -9,27 +9,24 @@ namespace Syncromatics.Clients.HoustonMetro.Api
 {
     public class HoustonMetroClient : IHoustonMetroClient
     {
-        private readonly IHoustonMetroClient _client;
-
-        public HoustonMetroClient() : this(new ClientSettings())
-        {
-
-        }
+        private readonly IHoustonMetroApi _client;
+        private readonly ClientSettings _settings;
 
         public HoustonMetroClient(ClientSettings clientSettings)
         {
-            var handler = new HttpClientHandler { MaxConnectionsPerServer = clientSettings.MaxConnections };
+            _settings = clientSettings;
+            var handler = new HttpClientHandler { MaxConnectionsPerServer = _settings.MaxConnections };
             var httpClient = new HttpClient(handler)
             {
-                BaseAddress = new Uri(clientSettings.ServerRootUrl)
+                BaseAddress = new Uri(_settings.ServerRootUrl)
             };
 
-            _client = new RestClient(httpClient).For<IHoustonMetroClient>();
+            _client = new RestClient(httpClient).For<IHoustonMetroApi>();
         }
 
-        public Task<Stop> GetArrivalsAsync([Path] int stopId)
+        public Task<Stop> GetArrivalsAsync(int stopId)
         {
-            return _client.GetArrivalsAsync(stopId);
+            return _client.GetArrivalsAsync(_settings.ApiKey, stopId);
         }
     }
 }
