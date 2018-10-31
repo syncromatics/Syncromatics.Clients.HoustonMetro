@@ -15,8 +15,13 @@ dotnet add package Syncromatics.Clients.HoustonMetro.Api
 Then use it to do a thing:
 
 ```csharp
-HoustonMetroClient client = new HoustonMetroClient();
-Stop stop = await client.GetArrivalsAsync(3832);
+ClientSettings settings = new ClientSettings
+{
+    // Sign up at https://developer-portal.ridemetro.org/products to get an API key
+    ApiKey = "";
+}
+HoustonMetroClient client = new HoustonMetroClient(settings);
+Stop stop = await client.GetArrivalsAsync(661);
 foreach (Arrival arrival in stop.ResultSet.Arrivals) {}
 ```
 
