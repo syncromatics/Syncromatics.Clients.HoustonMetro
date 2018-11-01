@@ -1,13 +1,11 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Text;
+﻿using System.Collections.Generic;
 using Newtonsoft.Json;
 
 namespace Syncromatics.Clients.HoustonMetro.Api
 {
-    public class ResultSet
+    public class ResultSet<TResult> where TResult : class
     {
         [JsonProperty("results")]
-        public List<Arrival> Arrivals { get; set; }
+        public List<TResult> Results { get; set; }
     }
 }
