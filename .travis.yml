@@ -1,0 +1,15 @@
+language: csharp
+
+os: linux # Ubuntu 14.04
+dist: trusty
+sudo: required
+dotnet: 2.0.0
+
+script:
+  - dotnet restore || travis_terminate 1
+  - dotnet build --no-restore || travis_terminate 1
+  - dotnet test --no-restore test/Syncromatics.Clients.HoustonMetro.Api.Tests || travis_terminate 1
+  - "if [[ $TRAVIS_PULL_REQUEST == 'false' && $TRAVIS_TAG ]]; then 
+  dotnet pack src/Syncromatics.Clients.HoustonMetro.Api --configuration Release /p:Version=$TRAVIS_TAG;
+  dotnet nuget push src/Syncromatics.Clients.HoustonMetro.Api/bin/Release/*.nupkg -s https://www.nuget.org/api/v2/package -k $NUGET_API_KEY;
+  fi"
