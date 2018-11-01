@@ -1,7 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Runtime.CompilerServices;
-using System.Text;
+﻿using System.Runtime.CompilerServices;
 using System.Threading.Tasks;
 using RestEase;
 
@@ -13,7 +10,12 @@ namespace Syncromatics.Clients.HoustonMetro.Api
     internal interface IHoustonMetroApi
     {
         [Get("data/Stops('MeTrAuOfHaCo_{stopId}')/Arrivals?$format=json")]
-        Task<Stop> GetArrivalsAsync(
+        Task<Response<Arrival>> GetArrivalsAsync(
+            [Header("Ocp-Apim-Subscription-Key")]string apiKey,
+            [Path]int stopId);
+
+        [Get("data/Stops('MeTrAuOfHaCo_{stopId}')/Routes?$format=json")]
+        Task<Response<Route>> GetRoutesAsync(
             [Header("Ocp-Apim-Subscription-Key")]string apiKey,
             [Path]int stopId);
     }

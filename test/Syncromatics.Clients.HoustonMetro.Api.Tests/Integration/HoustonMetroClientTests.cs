@@ -31,7 +31,7 @@ namespace Syncromatics.Clients.HoustonMetro.Api.Tests.Integration
         [InlineData(10055)]
         public async Task ShouldGetArrivals(int stopId)
         {
-            Stop result = null;
+            Response<Arrival> result = null;
             await RetryPolicy().ExecuteAsync(async () =>
             {
                 result = await _client.GetArrivalsAsync(stopId);
@@ -39,11 +39,41 @@ namespace Syncromatics.Clients.HoustonMetro.Api.Tests.Integration
 
             result.Should().NotBeNull();
             result.ResultSet.Should().NotBeNull();
-            result.ResultSet.Arrivals.Should().NotBeNull();
+            result.ResultSet.Results.Should().NotBeNull();
 
-            foreach (var arrival in result.ResultSet.Arrivals) {
+            foreach (var arrival in result.ResultSet.Results) {
                 arrival.RouteName.Should().NotBeNullOrEmpty();
                 arrival.DestinationName.Should().NotBeNullOrEmpty();
+            }
+        }
+
+        [Theory]
+        [InlineData(79)]
+        [InlineData(244)]
+        [InlineData(661)]
+        [InlineData(681)]
+        [InlineData(9045)]
+        [InlineData(9953)]
+        [InlineData(10055)]
+        public async Task ShouldGetRoutes(int stopId)
+        {
+            Response<Route> result = null;
+            await RetryPolicy().ExecuteAsync(async () =>
+            {
+                result = await _client.GetRoutesAsync(stopId);
+            });
+
+            result.Should().NotBeNull();
+            result.ResultSet.Should().NotBeNull();
+            result.ResultSet.Results.Should().NotBeNull();
+
+            foreach (var route in result.ResultSet.Results)
+            {
+                route.AgencyAbbreviation.Should().NotBeNullOrEmpty();
+                route.LongName.Should().NotBeNullOrEmpty();
+                route.RouteId.Should().NotBeNullOrEmpty();
+                route.RouteName.Should().NotBeNullOrEmpty();
+                route.RouteType.Should().NotBeNullOrEmpty();
             }
         }
 

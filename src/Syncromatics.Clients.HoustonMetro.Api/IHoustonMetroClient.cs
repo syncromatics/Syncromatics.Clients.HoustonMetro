@@ -1,13 +1,10 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Text;
-using System.Threading.Tasks;
-using RestEase;
+﻿using System.Threading.Tasks;
 
 namespace Syncromatics.Clients.HoustonMetro.Api
 {
     public interface IHoustonMetroClient
     {
-        Task<Stop> GetArrivalsAsync(int stopId);
+        Task<Response<Arrival>> GetArrivalsAsync(int stopId);
+        Task<Response<Route>> GetRoutesAsync(int stopId);
     }
 }

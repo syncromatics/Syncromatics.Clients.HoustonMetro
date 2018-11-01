@@ -1,7 +1,5 @@
 ﻿using System;
-using System.Collections.Generic;
 using System.Net.Http;
-using System.Text;
 using System.Threading.Tasks;
 using RestEase;
 
@@ -24,9 +22,10 @@ namespace Syncromatics.Clients.HoustonMetro.Api
             _client = new RestClient(httpClient).For<IHoustonMetroApi>();
         }
 
-        public Task<Stop> GetArrivalsAsync(int stopId)
-        {
-            return _client.GetArrivalsAsync(_settings.ApiKey, stopId);
-        }
+        public Task<Response<Arrival>> GetArrivalsAsync(int stopId) =>
+            _client.GetArrivalsAsync(_settings.ApiKey, stopId);
+
+        public Task<Response<Route>> GetRoutesAsync(int stopId) =>
+            _client.GetRoutesAsync(_settings.ApiKey, stopId);
     }
 }

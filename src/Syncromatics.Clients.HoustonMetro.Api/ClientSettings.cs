@@ -1,8 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Text;
-
-namespace Syncromatics.Clients.HoustonMetro.Api
+﻿namespace Syncromatics.Clients.HoustonMetro.Api
 {
     public class ClientSettings
     {
