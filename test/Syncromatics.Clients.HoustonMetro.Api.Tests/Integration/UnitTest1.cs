@@ -1,6 +1,7 @@
 using System;
 using System.Threading.Tasks;
 using FluentAssertions;
+using Polly;
 using Xunit;
 
 namespace Syncromatics.Clients.HoustonMetro.Api.Tests.Integration
@@ -30,8 +31,13 @@ namespace Syncromatics.Clients.HoustonMetro.Api.Tests.Integration
         [InlineData(10055)]
         public async Task ShouldGetArrivals(int stopId)
         {
-            var result = await _client.GetArrivalsAsync(stopId);
+            Stop result = null;
+            await RetryPolicy().ExecuteAsync(async () =>
+            {
+                result = await _client.GetArrivalsAsync(stopId);
+            });
 
+            result.Should().NotBeNull();
             result.ResultSet.Should().NotBeNull();
             result.ResultSet.Arrivals.Should().NotBeNull();
 
@@ -40,5 +46,15 @@ namespace Syncromatics.Clients.HoustonMetro.Api.Tests.Integration
                 arrival.DestinationName.Should().NotBeNullOrEmpty();
             }
         }
+
+        private Policy RetryPolicy() =>
+            Policy
+                .Handle<RestEase.ApiException>()
+                .WaitAndRetryAsync(
+                    retryCount: 5,
+                    sleepDurationProvider: (i) =>
+                        TimeSpan.FromSeconds(5 + Math.Pow(2, i)),
+                    onRetry: (ex, ts) =>
+                        Console.WriteLine($"{ex.Message} Retrying after {ts.TotalSeconds}s"));
     }
 }
