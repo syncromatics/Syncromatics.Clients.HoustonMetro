@@ -22,10 +22,10 @@ namespace Syncromatics.Clients.HoustonMetro.Api
             _client = new RestClient(httpClient).For<IHoustonMetroApi>();
         }
 
-        public Task<Response<Arrival>> GetArrivalsAsync(int stopId) =>
+        public Task<Response<Arrival>> GetArrivalsAsync(string stopId) =>
             _client.GetArrivalsAsync(_settings.ApiKey, stopId);
 
-        public Task<Response<Route>> GetRoutesAsync(int stopId) =>
+        public Task<Response<Route>> GetRoutesAsync(string stopId) =>
             _client.GetRoutesAsync(_settings.ApiKey, stopId);
     }
 }

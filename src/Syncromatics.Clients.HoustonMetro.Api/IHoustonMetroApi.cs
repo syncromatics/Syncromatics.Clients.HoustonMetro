@@ -9,14 +9,14 @@ namespace Syncromatics.Clients.HoustonMetro.Api
 {
     internal interface IHoustonMetroApi
     {
-        [Get("data/Stops('MeTrAuOfHaCo_{stopId}')/Arrivals?$format=json")]
+        [Get("data/Stops('{stopId}')/Arrivals?$format=json")]
         Task<Response<Arrival>> GetArrivalsAsync(
             [Header("Ocp-Apim-Subscription-Key")]string apiKey,
-            [Path]int stopId);
+            [Path]string stopId);
 
-        [Get("data/Stops('MeTrAuOfHaCo_{stopId}')/Routes?$format=json")]
+        [Get("data/Stops('{stopId}')/Routes?$format=json")]
         Task<Response<Route>> GetRoutesAsync(
             [Header("Ocp-Apim-Subscription-Key")]string apiKey,
-            [Path]int stopId);
+            [Path]string stopId);
     }
 }

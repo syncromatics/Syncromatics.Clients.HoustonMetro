@@ -22,14 +22,14 @@ namespace Syncromatics.Clients.HoustonMetro.Api.Tests.Integration
         }
 
         [Theory]
-        [InlineData(79)]
-        [InlineData(244)]
-        [InlineData(661)]
-        [InlineData(681)]
-        [InlineData(9045)]
-        [InlineData(9953)]
-        [InlineData(10055)]
-        public async Task ShouldGetArrivals(int stopId)
+        [InlineData("MeTrAuOfHaCo_79")]
+        [InlineData("MeTrAuOfHaCo_244")]
+        [InlineData("MeTrAuOfHaCo_661")]
+        [InlineData("MeTrAuOfHaCo_681")]
+        [InlineData("MeTrAuOfHaCo_9045")]
+        [InlineData("MeTrAuOfHaCo_9953")]
+        [InlineData("MeTrAuOfHaCo_10055")]
+        public async Task ShouldGetArrivals(string stopId)
         {
             Response<Arrival> result = null;
             await RetryPolicy().ExecuteAsync(async () =>
@@ -48,14 +48,14 @@ namespace Syncromatics.Clients.HoustonMetro.Api.Tests.Integration
         }
 
         [Theory]
-        [InlineData(79)]
-        [InlineData(244)]
-        [InlineData(661)]
-        [InlineData(681)]
-        [InlineData(9045)]
-        [InlineData(9953)]
-        [InlineData(10055)]
-        public async Task ShouldGetRoutes(int stopId)
+        [InlineData("MeTrAuOfHaCo_79")]
+        [InlineData("MeTrAuOfHaCo_244")]
+        [InlineData("MeTrAuOfHaCo_661")]
+        [InlineData("MeTrAuOfHaCo_681")]
+        [InlineData("MeTrAuOfHaCo_9045")]
+        [InlineData("MeTrAuOfHaCo_9953")]
+        [InlineData("MeTrAuOfHaCo_10055")]
+        public async Task ShouldGetRoutes(string stopId)
         {
             Response<Route> result = null;
             await RetryPolicy().ExecuteAsync(async () =>

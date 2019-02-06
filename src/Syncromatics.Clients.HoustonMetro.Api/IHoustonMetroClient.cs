@@ -4,7 +4,7 @@ namespace Syncromatics.Clients.HoustonMetro.Api
 {
     public interface IHoustonMetroClient
     {
-        Task<Response<Arrival>> GetArrivalsAsync(int stopId);
-        Task<Response<Route>> GetRoutesAsync(int stopId);
+        Task<Response<Arrival>> GetArrivalsAsync(string stopId);
+        Task<Response<Route>> GetRoutesAsync(string stopId);
     }
 }
